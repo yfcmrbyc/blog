@@ -1,0 +1,45 @@
+@import '../../scss/mixins';
+@import '../../scss/variables';
+
+.header {
+  height: 80px;
+  box-sizing: border-box;
+  background-color: $bg-element-color;
+  padding: 15px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 26px;
+}
+
+.title {
+  @include heading-text;
+}
+
+.title a {
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.title:hover a {
+  color: $active-color;
+}
+
+.container-button {
+  display: flex;
+}
+
+.btn {
+  @include heading-text;
+  @include btn;
+  border: none;
+  margin-right: 19px;
+}
+
+.btn-sign-up {
+  @include heading-text;
+  @include btn;
+  border: 1px solid $success-color;
+  box-sizing: border-box;
+  border-radius: 5px;
+  color: $success-color;
+}

@@ -1,0 +1,71 @@
+{
+    "extends": [
+      "airbnb",
+      "airbnb/hooks",
+      "eslint-config-prettier",
+      "prettier"
+    ],
+    "plugins": [
+      "react",
+      "react-hooks",
+      "import",
+      "jsx-a11y"
+    ],
+    "parser": "@babel/eslint-parser",
+    "parserOptions": {
+      "sourceType": "module",
+      "allowImportExportEveryWhere": false,
+      "ecmaFeatures": {
+        "globalReturn": false,
+        "jsx": true
+      },
+      "ecmaVersion": 2020,
+      "babelOptions": {
+        "presets": [
+          "@babel/preset-react"
+        ]
+      }
+    },
+    "env": {
+      "browser": true,
+      "jest": true
+    },
+    "rules": {
+      "no-else-return":"off",
+      "curly": ["error"],
+      "max-depth": ["warn", 4],
+      "id-length": ["warn", {
+        "exceptions": ["i", "j"],
+        "min": 2
+      }],
+      "react-hooks/rules-of-hooks": "off",
+      "no-lonely-if": ["error"],
+      "no-plusplus": ["off"],
+      "no-restricted-syntax": "off",
+      "class-methods-use-this": "off",
+      "jsx-a11y/href-no-hash": ["off"],
+      "jsx-a11y/anchor-is-valid": ["off"],
+      "jsx-a11y/label-has-associated-control": [
+        "error",
+        {
+          "assert": "either"
+        }
+      ],
+      "react/no-array-index-key": "off",
+      "react-hooks/exhaustive-deps": ["off"],
+      "react/jsx-props-no-spreading": ["off"],
+      "react/static-property-placement": "off",
+      "react/jsx-filename-extension": [1, {
+        "extensions": [".js", ".jsx"]
+      }],
+      "react/destructuring-assignment": "off",
+      "no-param-reassign": "off",
+      "no-return-assign": "off"
+    },
+    "settings": {
+      "react": {
+        "pragma": "React",
+        "version": "detect"
+      }
+    }
+}

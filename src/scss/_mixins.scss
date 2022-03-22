@@ -1,0 +1,25 @@
+@import './variables';
+
+@mixin heading-text {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+  display: flex;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+@mixin btn {
+  background-color: $bg-element-color;
+  padding: 4px 15px;
+  cursor: pointer;
+}
+
+@mixin description-text {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.75);
+}

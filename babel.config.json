@@ -1,0 +1,10 @@
+{
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "browserslistEnv": "> 0.25%, not dead"
+        }
+      ]
+    ]
+}
