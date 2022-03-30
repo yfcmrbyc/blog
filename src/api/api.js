@@ -1,3 +1,5 @@
+import ServerError from './api-error';
+
 export default class BlogService {
   URL = 'https://kata.academy:8021/api';
 
@@ -8,10 +10,65 @@ export default class BlogService {
 
     if (!response.ok) {
       throw new Error(`Could not fetch ${url}
-                            , recrived ${response.status}`);
+        Recrived ${response.status}`);
     }
 
     return response.json();
+  }
+
+  async setData(path, method, body) {
+    const response = await fetch(`${this.URL}${path}`, {
+      method,
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (response.ok) {
+      return response.json();
+    }
+
+    if (response.status === 422) {
+      const error = await response.json();
+      const messages = Object.keys(error.errors).reduce((acc, item) => {
+        acc[item] = error.errors[item];
+        return acc;
+      }, {});
+      throw new ServerError(messages, 'Validation error');
+    }
+
+    throw new Error(`Could not fetch ${this.URL}${path}
+                     Recrived ${response.status}`);
+  }
+
+  async setDataWithAuthorization(path, method, body, token) {
+    const response = await fetch(`${this.URL}${path}`, {
+      method,
+      headers: {
+        accept: 'application/json',
+        Authorization: `Token ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (response.ok) {
+      return response.json();
+    }
+
+    if (response.status === 422) {
+      const error = await response.json();
+      const messages = Object.keys(error.errors).reduce((acc, item) => {
+        acc[item] = error.errors[item];
+        return acc;
+      }, {});
+      throw new ServerError(messages, 'Validation error');
+    }
+
+    throw new Error(`Could not fetch ${this.URL}${path}
+                     Recrived ${response.status}`);
   }
 
   async getArticles(offset = 0) {
@@ -24,5 +81,34 @@ export default class BlogService {
     const article = await this.getResource(`${this.URL}/articles/${slug}`);
 
     return article;
+  }
+
+  async createUser(user) {
+    const body = {
+      user: { ...user },
+    };
+    const newUser = await this.setData('/users', 'POST', body);
+
+    return newUser;
+  }
+
+  async logIn(user) {
+    const body = {
+      user: { ...user },
+    };
+
+    const newUser = await this.setData('/users/login', 'POST', body);
+
+    return newUser;
+  }
+
+  async updateUserData(user) {
+    const body = {
+      user: { ...user },
+    };
+
+    const newUser = await this.setDataWithAuthorization('/user', 'PUT', body, user.token);
+
+    return newUser;
   }
 }

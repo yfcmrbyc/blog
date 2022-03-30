@@ -1,0 +1,50 @@
+@import '../../scss/variables';
+@import '../../scss/mixins';
+
+.container {
+  @include form-container;
+}
+
+.title {
+  font-size: 20px;
+  line-height: 28px;
+  text-align: center;
+  color: #262626;
+  margin-bottom: 21px;
+}
+
+.form,
+.label {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  @include label;
+  margin-bottom: 12px;
+
+  &:last-of-type {
+    margin-bottom: 21px;
+  }
+}
+
+.submit {
+  @include submit;
+}
+
+.text {
+  @include form-text;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
+  color: #8c8c8c;
+}
+
+.error {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #f5222d;
+}

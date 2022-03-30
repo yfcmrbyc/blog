@@ -1,27 +1,25 @@
 @import './variables';
+@import './mixins';
 
 body {
   margin: 0;
   background-color: #ebeef3;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-  margin-block-start: 0;
-  margin-block-end: 0;
-  margin-bottom: 0;
+input {
+  @include input;
+
+  &:focus,
+  &:active {
+    color: rgba(0, 0, 0, 0.75);
+    outline: none;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.75);
+  }
 }
 
-ul {
-  list-style-type: none;
-  margin-block-start: 0;
-  margin-block-end: 0;
-  padding-inline-start: 0;
+input::placeholder {
+  color: #bfbfbf;
 }
 
 .ant-pagination-item-active {
@@ -36,4 +34,12 @@ ul {
 .ant-pagination-item-active:focus-visible a,
 .ant-pagination-item-active:hover a {
   color: rgba(197, 223, 231, 0.89);
+}
+
+.ant-checkbox-wrapper {
+  @include label;
+  color: #595959;
+  border-top: 1px solid #d9d9d9;
+  margin: 9px 0 21px 0;
+  padding-top: 8px;
 }

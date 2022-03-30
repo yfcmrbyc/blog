@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Spin } from 'antd';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 import BlogService from '../../api/api';
 import style from './article.module.scss';
@@ -32,7 +34,9 @@ function Article({ slug }) {
     return (
       <section className={style.container}>
         <ArticleItem {...article} />
-        <p className={style.text}>{article.body}</p>
+        <ReactMarkdown remarkPlugins={[remarkGfm]} className={style.text}>
+          {article.body}
+        </ReactMarkdown>
       </section>
     );
   }
