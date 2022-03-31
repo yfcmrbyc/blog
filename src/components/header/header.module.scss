@@ -17,10 +17,18 @@
 }
 
 .title a {
-  color: rgba(0, 0, 0, 0.85);
+  color: $title-color;
+  transition: 500ms;
 }
 
-a:hover {
+.title a:hover {
+  color: $active-color;
+}
+
+.title a:focus {
+  outline: 1px solid $active-color;
+  border-radius: $border-radius;
+  padding: 6px;
   color: $active-color;
 }
 
@@ -38,6 +46,17 @@ a:hover {
   @include btn;
   border: none;
   margin-right: 19px;
+  transition: 500ms;
+
+  &:focus {
+    outline: 1px solid $active-color;
+    border-radius: $border-radius;
+    color: $active-color;
+  }
+
+  &:hover {
+    color: $active-color;
+  }
 }
 
 .sign-up {
@@ -45,8 +64,20 @@ a:hover {
   @include btn;
   border: 1px solid $success-color;
   box-sizing: border-box;
-  border-radius: 5px;
+  border-radius: $border-radius;
   color: $success-color;
+  transition: 500ms;
+
+  &:focus {
+    outline: 2px solid $success-color;
+    background-color: $success-color;
+    color: $bg-element-color;
+  }
+
+  &:hover {
+    background-color: $success-color;
+    color: $bg-element-color;
+  }
 }
 
 .create-article {
@@ -54,12 +85,24 @@ a:hover {
   @include btn;
   border: 1px solid $success-color;
   box-sizing: border-box;
-  border-radius: 5px;
+  border-radius: $border-radius;
   color: $success-color;
-  font-size: 14px;
+  font-size: $font-size--s;
   line-height: 22px;
   padding: 2px 10px;
   margin-right: 12px;
+  transition: 500ms;
+
+  &:focus {
+    outline: 2px solid $success-color;
+    background-color: $success-color;
+    color: $bg-element-color;
+  }
+
+  &:hover {
+    background-color: $success-color;
+    color: $bg-element-color;
+  }
 }
 
 .profile {
@@ -68,6 +111,17 @@ a:hover {
   box-sizing: border-box;
   border: none;
   margin-right: 12px;
+  transition: 500ms;
+
+  &:focus {
+    outline: 1px solid $active-color;
+    border-radius: $border-radius;
+    color: $active-color;
+  }
+
+  &:hover {
+    color: $active-color;
+  }
 }
 
 .user-avatar {
@@ -80,22 +134,21 @@ a:hover {
 .log-out {
   @include heading-text;
   @include btn;
-  border: 1px solid rgba(0, 0, 0, 0.75);
+  border: 1px solid $text-color;
   box-sizing: border-box;
-  border-radius: 5px;
-  color: rgba(0, 0, 0, 0.75);
+  border-radius: $border-radius;
+  color: $text-color;
   padding: 12px 15px;
-}
+  transition: 500ms;
 
-.sign-up:hover,
-.create-article:hover,
-.log-out:hover {
-  border: 1px solid $active-color;
-  border-radius: 5px;
-  color: $active-color;
-}
+  &:focus {
+    outline: 2px solid $text-color;
+    background-color: $text-color;
+    color: $bg-element-color;
+  }
 
-.sign-in:hover,
-.profile:hover {
-  color: $active-color;
+  &:hover {
+    background-color: $text-color;
+    color: $bg-element-color;
+  }
 }

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Spin } from 'antd';
+import { Spin, message } from 'antd';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 import BlogService from '../../api/api';
 import style from './article.module.scss';
 import ArticleItem from '../article-item/article-item';
+import ArticleButtons from '../article-buttons/article-buttons';
 
-function Article({ slug }) {
+function Article({ slug, token, user, getArticle }) {
   const blogService = new BlogService();
 
   const [isLoaded, setIsLoaded] = useState(false);
@@ -18,10 +19,11 @@ function Article({ slug }) {
     blogService
       .getFullArticle(slug)
       .then((res) => {
+        getArticle(res.article);
         setArticle(() => res.article);
         setIsLoaded(() => true);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => message.error(err));
   }, []);
 
   if (!isLoaded) {
@@ -34,6 +36,7 @@ function Article({ slug }) {
     return (
       <section className={style.container}>
         <ArticleItem {...article} />
+        {user === article.author.username && <ArticleButtons slug={slug} token={token} />}
         <ReactMarkdown remarkPlugins={[remarkGfm]} className={style.text}>
           {article.body}
         </ReactMarkdown>
@@ -42,8 +45,16 @@ function Article({ slug }) {
   }
 }
 
+Article.defaultProps = {
+  token: '',
+  user: '',
+};
+
 Article.propTypes = {
   slug: PropTypes.string.isRequired,
+  getArticle: PropTypes.func.isRequired,
+  token: PropTypes.string,
+  user: PropTypes.string,
 };
 
 export default Article;

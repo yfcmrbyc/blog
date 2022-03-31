@@ -6,23 +6,14 @@
 }
 
 .title {
-  font-size: 20px;
+  font-size: $font-size--l;
   line-height: 28px;
   text-align: center;
-  color: #262626;
+  color: $label-text;
   margin-bottom: 21px;
 }
 
-.form,
 .label {
-  display: flex;
-  flex-direction: column;
-}
-
-.label {
-  @include label;
-  margin-bottom: 12px;
-
   &:last-of-type {
     margin-bottom: 21px;
   }
@@ -34,17 +25,17 @@
 
 .text {
   @include form-text;
-  font-size: 12px;
+  font-size: $font-size--xs;
   line-height: 20px;
   text-align: center;
-  color: #8c8c8c;
+  color: $article-color;
 }
 
 .error {
-  font-family: 'Roboto', sans-serif;
+  font-family: $form-font-family;
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
+  font-size: $font-size--s;
   line-height: 22px;
-  color: #f5222d;
+  color: $error-color;
 }

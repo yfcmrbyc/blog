@@ -3,6 +3,7 @@
 
 .container {
   @include form-container;
+  max-width: 938px;
 }
 
 .title {
@@ -14,13 +15,13 @@
 }
 
 .label {
-  &:last-of-type {
-    margin-bottom: 21px;
-  }
+  @include label;
+  margin-bottom: 21px;
 }
 
 .submit {
   @include submit;
+  max-width: 319px;
 }
 
 .text {
@@ -38,4 +39,28 @@
   font-size: $font-size--s;
   line-height: 22px;
   color: $error-color;
+}
+
+.tags {
+  display: grid;
+  grid-template-columns: 455px 140px;
+}
+
+.add {
+  @include tag-button;
+  border: 1px solid $active-color;
+  color: $active-color;
+  align-self: flex-end;
+  margin-bottom: 5px;
+  transition: 500ms;
+
+  &:focus {
+    outline: none;
+    border: 2px solid $active-color;
+  }
+
+  &:hover {
+    background-color: $active-color;
+    color: $bg-element-color;
+  }
 }

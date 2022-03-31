@@ -27,7 +27,7 @@ function Header({ isLogIn, user, logOut }) {
   const logIn = (
     <>
       <li>
-        <Link to="" className={style['create-article']}>
+        <Link to="/new-article" className={style['create-article']}>
           Create article
         </Link>
       </li>

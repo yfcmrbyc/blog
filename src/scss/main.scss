@@ -6,7 +6,19 @@ body {
   background-color: #ebeef3;
 }
 
-input {
+form,
+label {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  @include label;
+  margin-bottom: 12px;
+}
+
+input,
+textarea {
   @include input;
 
   &:focus,
@@ -18,7 +30,8 @@ input {
   }
 }
 
-input::placeholder {
+input::placeholder,
+textarea::placeholder {
   color: #bfbfbf;
 }
 
@@ -42,4 +55,8 @@ input::placeholder {
   border-top: 1px solid #d9d9d9;
   margin: 9px 0 21px 0;
   padding-top: 8px;
+}
+
+.ant-btn {
+  border-radius: 4px;
 }

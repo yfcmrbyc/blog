@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Checkbox } from 'antd';
+import { Checkbox, message } from 'antd';
 import { useForm, Controller } from 'react-hook-form';
 
 import style from './sign-up.module.scss';
@@ -51,7 +51,7 @@ function SignUp() {
             }
           });
         } else {
-          console.error(err);
+          message.error(err);
         }
       });
   };
@@ -66,8 +66,8 @@ function SignUp() {
   return (
     <section className={style.container}>
       <h3 className={style.title}>Create new account</h3>
-      <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
-        <label className={style.label}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label>
           Username
           <input
             {...register('Username', {
@@ -90,7 +90,7 @@ function SignUp() {
           )}
           {usernameError && <p className={style.error}>{`Username ${usernameError}.`}</p>}
         </label>
-        <label className={style.label}>
+        <label>
           Email address
           <input
             {...register('Email', {
@@ -107,7 +107,7 @@ function SignUp() {
           {errors?.Email?.type === 'pattern' && <p className={style.error}>Email must be a valid email address</p>}
           {emailError && <p className={style.error}>{`Email ${emailError}.`}</p>}
         </label>
-        <label className={style.label}>
+        <label>
           Password
           <input
             {...register('Password', {
@@ -129,7 +129,7 @@ function SignUp() {
             <p className={style.error}>Password cannot be less than 6 characters</p>
           )}
         </label>
-        <label className={style.label}>
+        <label>
           Repeat Password
           <input
             {...register('repeatPassword', {

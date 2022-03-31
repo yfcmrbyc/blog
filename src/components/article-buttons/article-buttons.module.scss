@@ -1,0 +1,63 @@
+@import '../../scss/mixins';
+@import '../../scss/variables';
+
+.buttons {
+  list-style: none;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-bottom: 0;
+  padding: 0;
+  display: flex;
+  position: absolute;
+  right: 13px;
+  top: 91px;
+}
+
+.delete {
+  @include article-button;
+  border: 1px solid $error-color;
+  color: $error-color;
+  cursor: pointer;
+  margin-right: 16px;
+  transition: 500ms;
+
+  &:hover {
+    background-color: $error-color;
+    color: $bg-element-color;
+  }
+
+  &:focus {
+    outline: 2px solid $error-color;
+    background-color: $error-color;
+    color: $bg-element-color;
+  }
+}
+
+.edit {
+  @include article-button;
+  border: 1px solid $success-color;
+  color: $success-color;
+  min-width: 65px;
+  min-height: 31px;
+  transition: 500ms;
+
+  a {
+    color: $success-color;
+    transition: 500ms;
+  }
+
+  &:focus {
+    outline: 2px solid $success-color;
+    background-color: $success-color;
+    a {
+      color: $bg-element-color;
+    }
+  }
+
+  &:hover {
+    background-color: $success-color;
+    a {
+      color: $bg-element-color;
+    }
+  }
+}

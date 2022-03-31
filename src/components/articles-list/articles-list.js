@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Pagination } from 'antd';
+import { message, Pagination } from 'antd';
 
 import style from './articles-list.module.scss';
 import BlogService from '../../api/api';
@@ -13,7 +13,7 @@ function ArticlesList() {
   const [articles, setArticles] = useState([]);
   const [total, setTotal] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [offset, setOffset] = useState(5);
+  const [offset, setOffset] = useState(0);
 
   useEffect(() => {
     blogService
@@ -23,20 +23,33 @@ function ArticlesList() {
         setTotal(() => res.articlesCount);
         setIsLoaded(() => true);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => message.error(err));
   }, []);
 
-  useEffect(() => {
-    setIsLoaded(() => false);
-    blogService
-      .getArticles(offset)
-      .then((res) => {
-        setArticles(() => [...res.articles]);
-        setOffset(() => offset + 5);
-        setIsLoaded(() => true);
-      })
-      .catch((err) => console.error(err));
-  }, [currentPage]);
+  const changePage = (page) => {
+    if (page > currentPage) {
+      setIsLoaded(() => false);
+      blogService
+        .getArticles(offset + 5 * (page - currentPage))
+        .then((res) => {
+          setArticles(() => [...res.articles]);
+          setOffset(() => offset + 5 * (page - currentPage));
+          setIsLoaded(() => true);
+        })
+        .catch((err) => message.error(err));
+    } else {
+      setIsLoaded(() => false);
+      blogService
+        .getArticles(offset - 5 * (currentPage - page))
+        .then((res) => {
+          setArticles(() => [...res.articles]);
+          setOffset(() => offset - 5 * (currentPage - page));
+          setIsLoaded(() => true);
+        })
+        .catch((err) => message.error(err));
+    }
+    setCurrentPage(() => page);
+  };
 
   const renderList = (data) =>
     data.map((item) => (
@@ -44,8 +57,6 @@ function ArticlesList() {
         <ArticleItem {...item} />
       </li>
     ));
-
-  const changePage = (page) => setCurrentPage(() => page);
 
   const list = isLoaded ? renderList(articles) : null;
   const spiner = !isLoaded ? <Spiner /> : null;

@@ -1,0 +1,28 @@
+@import '../../scss/variables';
+@import '../../scss/mixins';
+
+.input-group {
+  margin-bottom: 5px;
+}
+
+.tag {
+  width: 300px;
+}
+
+.delete {
+  border: 1px solid $error-color;
+  color: $error-color;
+  @include tag-button;
+  margin-left: 17px;
+  transition: 500ms;
+
+  &:focus {
+    outline: none;
+    border: 2px solid $error-color;
+  }
+
+  &:hover {
+    background-color: $error-color;
+    color: $bg-element-color;
+  }
+}

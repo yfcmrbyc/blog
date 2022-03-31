@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { Skeleton } from 'antd';
@@ -6,15 +6,9 @@ import { Skeleton } from 'antd';
 import style from './profile.module.scss';
 
 function Profile({ user, updateUser, usernameError, emailError }) {
-  const [userData, setUserData] = useState({});
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-
-  useEffect(() => {
-    setUserData(() => ({ ...user }));
-    setUsername(() => user.username);
-    setEmail(() => user.email);
-  }, [user]);
+  const [userData, setUserData] = useState({ ...user });
+  const [username, setUsername] = useState(user.username);
+  const [email, setEmail] = useState(user.email);
 
   const {
     register,
@@ -33,7 +27,7 @@ function Profile({ user, updateUser, usernameError, emailError }) {
     <Skeleton loading={!user.username} active className={style.container}>
       <section className={style.container}>
         <h3 className={style.title}>Edit Profile</h3>
-        <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <label className={style.label}>
             Username
             <input
@@ -129,13 +123,8 @@ function Profile({ user, updateUser, usernameError, emailError }) {
     </Skeleton>
   );
 }
-
-Profile.defaultProps = {
-  user: {},
-};
-
 Profile.propTypes = {
-  user: PropTypes.objectOf(PropTypes.string),
+  user: PropTypes.objectOf(PropTypes.string).isRequired,
   updateUser: PropTypes.func.isRequired,
   usernameError: PropTypes.string.isRequired,
   emailError: PropTypes.string.isRequired,

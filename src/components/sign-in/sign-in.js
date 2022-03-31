@@ -34,17 +34,16 @@ function SignIn({ error, logIn, isLoggedIn }) {
   return (
     <section className={style.container}>
       <h3 className={style.title}>Sign In</h3>
-      <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <label className={style.label}>
           Email address
           <input
             {...register('Email', {
               required: true,
-              pattern:
-                /^([A-Z|a-z|0-9](\.|_){0,1})+[A-Z|a-z|0-9]+@([A-Z|a-z|0-9])+((\.){0,1}[A-Z|a-z|0-9]){2}\.[a-z]+$/i,
+              pattern: /.+@.+\..+$/i,
             })}
             style={styleEmailInpit}
-            type="email"
+            type="text"
             value={email}
             placeholder="Email address"
             onChange={(event) => setEmail(() => event.target.value)}

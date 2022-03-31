@@ -40,7 +40,8 @@ export default class BlogService {
     }
 
     throw new Error(`Could not fetch ${this.URL}${path}
-                     Recrived ${response.status}`);
+                     Recrived ${response.status}
+                     Message: ${response.statusText}`);
   }
 
   async setDataWithAuthorization(path, method, body, token) {
@@ -68,7 +69,8 @@ export default class BlogService {
     }
 
     throw new Error(`Could not fetch ${this.URL}${path}
-                     Recrived ${response.status}`);
+                     Recrived ${response.status}
+                     Message: ${response.statusText}`);
   }
 
   async getArticles(offset = 0) {
@@ -110,5 +112,42 @@ export default class BlogService {
     const newUser = await this.setDataWithAuthorization('/user', 'PUT', body, user.token);
 
     return newUser;
+  }
+
+  async createArticle(article, token) {
+    const body = {
+      article: { ...article },
+    };
+
+    const newArticle = await this.setDataWithAuthorization('/articles', 'POST', body, token);
+
+    return newArticle;
+  }
+
+  async updateArticle(article, slug, token) {
+    const body = {
+      article: { ...article },
+    };
+
+    const newArticle = await this.setDataWithAuthorization(`/articles/${slug}`, 'PUT', body, token);
+
+    return newArticle;
+  }
+
+  async deleteArticle(slug, token) {
+    const response = await fetch(`${this.URL}/articles/${slug}`, {
+      method: 'DELETE',
+      headers: {
+        accept: 'application/json',
+        Authorization: `Token ${token}`,
+      },
+    });
+
+    if (response.ok) return true;
+    else {
+      throw new Error(`Could not fetch ${this.URL}/articles/${slug}
+                        Recrived ${response.status}
+                        Message: ${response.statusText}`);
+    }
   }
 }
