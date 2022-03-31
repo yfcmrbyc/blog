@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { message, Pagination } from 'antd';
 
 import style from './articles-list.module.scss';
@@ -6,7 +7,7 @@ import BlogService from '../../api/api';
 import ArticleItem from '../article-item/article-item';
 import Spiner from '../spiner/spiner';
 
-function ArticlesList() {
+function ArticlesList({ isLoggedIn, token }) {
   const blogService = new BlogService();
 
   const [isLoaded, setIsLoaded] = useState(false);
@@ -54,7 +55,7 @@ function ArticlesList() {
   const renderList = (data) =>
     data.map((item) => (
       <li className={style.container} key={item.slug}>
-        <ArticleItem {...item} />
+        <ArticleItem {...item} isLoggedIn={isLoggedIn} token={token} />
       </li>
     ));
 
@@ -80,5 +81,14 @@ function ArticlesList() {
     </>
   );
 }
+
+ArticlesList.defaultProps = {
+  token: '',
+};
+
+ArticlesList.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+  token: PropTypes.string,
+};
 
 export default ArticlesList;

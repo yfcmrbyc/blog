@@ -9,7 +9,7 @@ import style from './article.module.scss';
 import ArticleItem from '../article-item/article-item';
 import ArticleButtons from '../article-buttons/article-buttons';
 
-function Article({ slug, token, user, getArticle }) {
+function Article({ slug, token, user, getArticle, isLoggedIn }) {
   const blogService = new BlogService();
 
   const [isLoaded, setIsLoaded] = useState(false);
@@ -35,7 +35,7 @@ function Article({ slug, token, user, getArticle }) {
   } else {
     return (
       <section className={style.container}>
-        <ArticleItem {...article} />
+        <ArticleItem {...article} isLoggedIn={isLoggedIn} token={token} />
         {user === article.author.username && <ArticleButtons slug={slug} token={token} />}
         <ReactMarkdown remarkPlugins={[remarkGfm]} className={style.text}>
           {article.body}
@@ -48,6 +48,7 @@ function Article({ slug, token, user, getArticle }) {
 Article.defaultProps = {
   token: '',
   user: '',
+  isLoggedIn: false,
 };
 
 Article.propTypes = {
@@ -55,6 +56,7 @@ Article.propTypes = {
   getArticle: PropTypes.func.isRequired,
   token: PropTypes.string,
   user: PropTypes.string,
+  isLoggedIn: PropTypes.bool,
 };
 
 export default Article;

@@ -1,5 +1,6 @@
 @import '../../scss/mixins';
 @import '../../scss/variables';
+@import './vector';
 
 .container {
   display: flex;
@@ -13,16 +14,43 @@
 }
 
 .btn {
-  border: none;
-  width: 16px;
-  height: 16px;
-  background: $bg-element-color url(./Vector.svg) no-repeat center;
-  margin-left: 13px;
+  @include like-btn;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.active-btn {
+  @include like-btn;
+  cursor: pointer;
+  transition: 500ms;
+
+  &:hover {
+    background: $bg-element-color $url-svg--hover no-repeat;
+    background-position: 15%;
+  }
+}
+
+.liked {
+  @include like-btn;
+  background: $bg-element-color $url-svg--liked no-repeat;
+  background-position: 15%;
+  cursor: pointer;
+  transition: 500ms;
+
+  &:hover {
+    background: $bg-element-color $url-svg--hover no-repeat;
+    background-position: 15%;
+  }
 }
 
 .counter {
   @include description-text;
-  margin-left: 5px;
+  position: absolute;
+  top: 0px;
+  left: 22px;
+  cursor: default;
 }
 
 .tags-container {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import { message } from 'antd';
 
 import style from './app.module.scss';
@@ -34,7 +34,6 @@ function App() {
     blogService
       .logIn(user)
       .then((res) => {
-        console.log(res);
         const authorizationData = {
           currentUser: { ...res },
         };
@@ -87,58 +86,83 @@ function App() {
     <Router>
       <main className={style.app}>
         <Header isLogIn={isLoggedIn} {...currentUser} logOut={loggingOut} />
-
-        <Route path="/" exact component={ArticlesList} />
-        <Route path="/articles/" exact component={ArticlesList} />
-        <Route
-          path="/articles/:slug/"
-          exact
-          render={({ match }) => {
-            const { slug } = match.params;
-            if (isLoggedIn) {
-              return (
-                <Article
-                  slug={slug}
-                  getArticle={(article) => setCurrentArticle(() => ({ ...article }))}
-                  token={currentUser.user.token}
-                  user={currentUser.user.username}
-                />
-              );
+        <Switch>
+          <Route
+            path="/"
+            exact
+            render={() =>
+              isLoggedIn ? (
+                <ArticlesList isLoggedIn={isLoggedIn} token={currentUser.user.token} />
+              ) : (
+                <ArticlesList isLoggedIn={isLoggedIn} />
+              )
             }
-            return <Article slug={slug} getArticle={(article) => setCurrentArticle(() => ({ ...article }))} />;
-          }}
-        />
-        <Route
-          path="/articles/:slug/edit"
-          render={({ match }) => {
-            const { slug } = match.params;
-            return <NewArticle isNew={false} article={currentArticle} slug={slug} token={currentUser.user.token} />;
-          }}
-        />
-        <Route
-          path="/new-article"
-          render={() => (isLoggedIn ? <NewArticle isNew token={currentUser.user.token} /> : <Redirect to="/sign-in" />)}
-        />
-        <Route
-          path="/sign-in"
-          render={() => <SignIn logIn={loggingInUser} isLoggedIn={isLoggedIn} error={logInError} />}
-        />
-        <Route path="/sign-up" component={SignUp} />
-        <Route
-          path="/profile"
-          render={() =>
-            isLoggedIn ? (
-              <Profile
-                user={currentUser.user}
-                updateUser={updateUser}
-                usernameError={usernameError}
-                emailError={emailError}
-              />
-            ) : (
-              <Redirect to="/sign-in" />
-            )
-          }
-        />
+          />
+          <Route
+            path="/articles/"
+            exact
+            render={() =>
+              isLoggedIn ? (
+                <ArticlesList isLoggedIn={isLoggedIn} token={currentUser.user.token} />
+              ) : (
+                <ArticlesList isLoggedIn={isLoggedIn} />
+              )
+            }
+          />
+          <Route
+            path="/articles/:slug/"
+            exact
+            render={({ match }) => {
+              const { slug } = match.params;
+              if (isLoggedIn) {
+                return (
+                  <Article
+                    slug={slug}
+                    isLoggedIn={isLoggedIn}
+                    getArticle={(article) => setCurrentArticle(() => ({ ...article }))}
+                    token={currentUser.user.token}
+                    user={currentUser.user.username}
+                  />
+                );
+              }
+              return <Article slug={slug} getArticle={(article) => setCurrentArticle(() => ({ ...article }))} />;
+            }}
+          />
+          <Route
+            path="/articles/:slug/edit"
+            render={({ match }) => {
+              const { slug } = match.params;
+              return <NewArticle isNew={false} article={currentArticle} slug={slug} token={currentUser.user.token} />;
+            }}
+          />
+          <Route
+            path="/new-article"
+            render={() =>
+              isLoggedIn ? <NewArticle isNew token={currentUser.user.token} /> : <Redirect to="/sign-in" />
+            }
+          />
+          <Route
+            path="/sign-in"
+            render={() => <SignIn logIn={loggingInUser} isLoggedIn={isLoggedIn} error={logInError} />}
+          />
+          <Route path="/sign-up" component={SignUp} />
+          <Route
+            path="/profile"
+            render={() =>
+              isLoggedIn ? (
+                <Profile
+                  user={currentUser.user}
+                  updateUser={updateUser}
+                  usernameError={usernameError}
+                  emailError={emailError}
+                />
+              ) : (
+                <Redirect to="/sign-in" />
+              )
+            }
+          />
+          <Redirect to="/" />
+        </Switch>
       </main>
     </Router>
   );

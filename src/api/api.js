@@ -73,6 +73,23 @@ export default class BlogService {
                      Message: ${response.statusText}`);
   }
 
+  async setDataWithAuthWithoutBody(path, method, token) {
+    const response = await fetch(`${this.URL}${path}`, {
+      method,
+      headers: {
+        accept: 'application/json',
+        Authorization: `Token ${token}`,
+      },
+    });
+
+    if (response.ok) return response;
+    else {
+      throw new Error(`Could not fetch ${this.URL}${path}
+                        Recrived ${response.status}
+                        Message: ${response.statusText}`);
+    }
+  }
+
   async getArticles(offset = 0) {
     const articles = await this.getResource(`${this.URL}/articles?limit=5&offset=${offset}`);
 
@@ -135,19 +152,12 @@ export default class BlogService {
   }
 
   async deleteArticle(slug, token) {
-    const response = await fetch(`${this.URL}/articles/${slug}`, {
-      method: 'DELETE',
-      headers: {
-        accept: 'application/json',
-        Authorization: `Token ${token}`,
-      },
-    });
+    const reply = await this.setDataWithAuthWithoutBody(`/articles/${slug}`, 'DELETE', token);
+    return reply;
+  }
 
-    if (response.ok) return true;
-    else {
-      throw new Error(`Could not fetch ${this.URL}/articles/${slug}
-                        Recrived ${response.status}
-                        Message: ${response.statusText}`);
-    }
+  async toggleLikeArticle(slug, method, token) {
+    const likedArticle = await this.setDataWithAuthWithoutBody(`/articles/${slug}/favorite`, method, token);
+    return likedArticle.json();
   }
 }

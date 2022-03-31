@@ -125,3 +125,14 @@
   font-size: $font-size--s;
   line-height: 22px;
 }
+
+@mixin like-btn {
+  border: none;
+  width: 30px;
+  height: 20px;
+  padding: 2px;
+  background: $bg-element-color $url-svg no-repeat;
+  background-position: 15%;
+  margin-left: 13px;
+  position: relative;
+}

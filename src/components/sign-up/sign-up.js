@@ -88,7 +88,7 @@ function SignUp() {
           {errors?.Username?.type === 'minLength' && (
             <p className={style.error}>Username cannot be less than 3 characters</p>
           )}
-          {usernameError && <p className={style.error}>{`Username ${usernameError}.`}</p>}
+          {usernameError && <p className={style.error}>{`Username ${usernameError}`}</p>}
         </label>
         <label>
           Email address
@@ -105,7 +105,7 @@ function SignUp() {
           />
           {errors?.Email?.type === 'required' && <p className={style.error}>This field is required</p>}
           {errors?.Email?.type === 'pattern' && <p className={style.error}>Email must be a valid email address</p>}
-          {emailError && <p className={style.error}>{`Email ${emailError}.`}</p>}
+          {emailError && <p className={style.error}>{`Email ${emailError}`}</p>}
         </label>
         <label>
           Password
